@@ -4,12 +4,16 @@ const { Notification } = require('../../../src/models');
 describe('Notification model', () => {
   describe('Notification validation', () => {
     let newNotification;
+
     beforeEach(() => {
       newNotification = {
-        notification_id: faker.datatype.uuid(),
-        payload: '{}',
-        is_delivered: true,
-        customer_id: '123',
+        payment_id: faker.datatype.uuid(),
+        payment_code: faker.datatype.uuid(),
+        amount: '100000',
+        paid_at: faker.datatype.datetime(),
+        external_id: faker.datatype.uuid(),
+        customer_id: 'ABC',
+        is_delivered: false,
       };
     });
 
