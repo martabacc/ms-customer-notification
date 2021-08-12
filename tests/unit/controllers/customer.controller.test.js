@@ -3,6 +3,7 @@ const customerController = require('../../../src/controllers/customer.controller
 
 jest.mock('../../../src/services/customer.service', () => ({
   update: jest.fn(),
+  get: jest.fn(),
   updateAuthKey: jest.fn(),
 }));
 
@@ -49,6 +50,16 @@ describe('CustomerController', () => {
       await customerController.updateAuthKey(mockReq, mockRes);
 
       expect(customerService.updateAuthKey).toHaveBeenCalledWith('123');
+    });
+  });
+
+  describe('get', () => {
+    test('should call customerService.get with correct param', async () => {
+      mockReq.params = { customerId: '123' };
+
+      await customerController.get(mockReq, mockRes);
+
+      expect(customerService.get).toHaveBeenCalledWith('123');
     });
   });
 });

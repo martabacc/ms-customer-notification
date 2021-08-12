@@ -18,7 +18,16 @@ const updateAuthKey = async (req, res) => {
   res.status(httpStatus.OK).send(customer);
 };
 
+const get = async (req, res) => {
+  const { customerId } = req.params;
+
+  const customer = await customerService.get(customerId);
+
+  res.status(httpStatus.OK).send(customer);
+};
+
 module.exports = {
   patch,
   updateAuthKey,
+  get,
 };
