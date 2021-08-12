@@ -10,12 +10,17 @@ const customerSchema = mongoose.Schema(
       required: true,
       trim: true,
     },
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
     authentication_key: {
       type: String,
       required: true,
       trim: true,
     },
-    subscription_url: {
+    callback_url: {
       type: String,
       required: true,
       trim: true,
@@ -23,6 +28,7 @@ const customerSchema = mongoose.Schema(
   },
   {
     timestamps: true,
+    collection: 'customers',
   }
 );
 

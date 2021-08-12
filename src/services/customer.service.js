@@ -7,8 +7,8 @@ const { Customer } = require('../models');
  * @param {Object} payload to be updated
  * @returns {Promise<Customer>}
  */
-const update = async (customer_id, payload) => {
-  return Customer.findOneAndUpdate({ customer_id }, payload);
+const update = (customer_id, payload) => {
+  return Customer.findOneAndUpdate({ customer_id }, payload, { new: true });
 };
 
 /**
@@ -16,11 +16,11 @@ const update = async (customer_id, payload) => {
  * @param {string} customer_id
  * @returns {Promise<Customer>}
  */
-const updateAuthKey = async (customer_id) => {
+const updateAuthKey = (customer_id) => {
   const newKey = uuid.v4();
   const payload = { authentication_key: newKey };
 
-  return Customer.findOneAndUpdate({ customer_id }, payload);
+  return Customer.findOneAndUpdate({ customer_id }, payload, { new: true });
 };
 
 /**
@@ -28,12 +28,25 @@ const updateAuthKey = async (customer_id) => {
  * @param {string} customer_id
  * @returns {Promise<Customer>}
  */
-const get = async (customer_id) => {
+const get = (customer_id) => {
   return Customer.findOne({ customer_id });
+};
+
+/**
+ * getting record of customer in database
+ * @param {Object} payload
+ * @returns {Promise<Customer>}
+ */
+const create = (payload) => {
+  return Customer.create({
+    ...payload,
+    authentication_key: uuid.v4(),
+  });
 };
 
 module.exports = {
   update,
   get,
   updateAuthKey,
+  create,
 };

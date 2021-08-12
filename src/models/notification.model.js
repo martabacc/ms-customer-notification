@@ -43,6 +43,7 @@ const notificationSchema = mongoose.Schema(
   },
   {
     timestamps: true,
+    collection: 'notifications',
   }
 );
 
@@ -50,7 +51,7 @@ notificationSchema.virtual('notification_id').get(function () {
   return this._id;
 });
 
-// tell Mongoose to retreive the virtual fields
+// tell Mongoose to retrieve the virtual fields
 notificationSchema.set('toObject', { virtuals: true });
 notificationSchema.set('toJSON', { virtuals: true });
 

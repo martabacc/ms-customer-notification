@@ -11,6 +11,10 @@ const routes = [
     route: notificationRoute,
   },
   {
+    path: '/customer',
+    route: customerRoute,
+  },
+  {
     path: '/docs',
     route: docsRoute,
   },

@@ -6,8 +6,8 @@ const { Notification } = require('../models');
  * @param {Object} payload to be updated
  * @returns {Promise<Notification>}
  */
-const update = async (notification_id, payload) => {
-  return Notification.findOneAndUpdate({ _id: notification_id }, payload);
+const update = ({ notification_id }, payload) => {
+  return Notification.findByIdAndUpdate(notification_id, payload, { new: true });
 };
 
 /**
@@ -15,7 +15,7 @@ const update = async (notification_id, payload) => {
  * @param {Object} payload
  * @returns {Promise<Notification>}
  */
-const create = async (payload) => {
+const create = (payload) => {
   return Notification.create(payload);
 };
 
@@ -24,7 +24,7 @@ const create = async (payload) => {
  * @param {string} customer_id
  * @returns {Promise<Notification>}
  */
-const findUndelivered = async (customer_id) => {
+const findUndelivered = (customer_id) => {
   return Notification.find({
     customer_id,
     is_delivered: false,

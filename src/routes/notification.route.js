@@ -6,6 +6,6 @@ const router = express.Router();
 router.post('/', notificationController.sendNotification);
 router.post('/test', notificationController.sendDummyNotification);
 router.post('/retry', notificationController.retryDelivery);
-router.patch('/{notification_id}', notificationController.update);
+router.patch('/:notification_id', notificationController.update);
 
 module.exports = router;

@@ -8,7 +8,7 @@ describe('Customer model', () => {
       newCustomer = {
         customer_id: faker.datatype.uuid(),
         authentication_key: 'abc',
-        subscription_url: 'http://abc',
+        callback_url: 'http://abc',
       };
     });
 
