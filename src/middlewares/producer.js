@@ -1,8 +1,8 @@
 const createKafkaInstance = require('./kafka');
 const config = require('../config/config');
 
-const createProducer = async (err, req, res, next) => {
-  const producer = createKafkaInstance();
+const createProducer = async (req, res, next) => {
+  const producer = await createKafkaInstance();
 
   const notificationProducer = {
     send: (payload) =>
@@ -13,7 +13,8 @@ const createProducer = async (err, req, res, next) => {
   };
 
   Object.assign(res.locals, { notificationProducer });
-  next();
+
+  return next();
 };
 
 module.exports = createProducer;

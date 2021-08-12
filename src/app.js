@@ -42,7 +42,6 @@ app.options('*', cors());
 
 app.use(createProducer);
 
-// limit repeated failed requests to endpoints
 if (config.env === 'production') {
   app.use('*', maxRateInMinutes(15, 3));
 }

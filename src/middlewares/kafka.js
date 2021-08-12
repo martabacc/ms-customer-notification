@@ -4,7 +4,7 @@ const config = require('../config/config');
 const createKafkaInstance = async () => {
   const kafka = new Kafka({
     clientId: config.kafka.clientId,
-    brokers: [config.kafka.brokerList],
+    brokers: config.kafka.brokerList,
     ssl: true,
     sasl: config.kafka.sasl,
   });

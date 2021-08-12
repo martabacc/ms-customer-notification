@@ -5,14 +5,10 @@ const docsRoute = require('./docs.route');
 
 const router = express.Router();
 
-const defaultRoutes = [
-  {
-    path: '/customer',
-    route: [customerRoute],
-  },
+const routes = [
   {
     path: '/notification',
-    route: [notificationRoute],
+    route: notificationRoute,
   },
   {
     path: '/docs',
@@ -20,7 +16,7 @@ const defaultRoutes = [
   },
 ];
 
-defaultRoutes.forEach((route) => {
+routes.forEach((route) => {
   router.use(route.path, route.route);
 });
 
