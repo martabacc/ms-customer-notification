@@ -6,9 +6,9 @@ describe('Customer model', () => {
     let newCustomer;
     beforeEach(() => {
       newCustomer = {
-        customerId: faker.datatype.uuid(),
-        authenticationKey: 'abc',
-        subscriptionURL: 'http://abc',
+        customer_id: faker.datatype.uuid(),
+        authentication_key: 'abc',
+        subscription_url: 'http://abc',
       };
     });
 

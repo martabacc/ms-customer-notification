@@ -35,7 +35,7 @@ describe('CustomerController', () => {
   describe('patch', () => {
     test('should call customerService.update with correct param', async () => {
       mockReq.body = {};
-      mockReq.params = { customerId: '123' };
+      mockReq.params = { customer_id: '123' };
 
       await customerController.patch(mockReq, mockRes);
 
@@ -45,7 +45,7 @@ describe('CustomerController', () => {
 
   describe('updateAuthKey', () => {
     test('should call customerService.update with correct param', async () => {
-      mockReq.params = { customerId: '123' };
+      mockReq.params = { customer_id: '123' };
 
       await customerController.updateAuthKey(mockReq, mockRes);
 
@@ -55,7 +55,7 @@ describe('CustomerController', () => {
 
   describe('get', () => {
     test('should call customerService.get with correct param', async () => {
-      mockReq.params = { customerId: '123' };
+      mockReq.params = { customer_id: '123' };
 
       await customerController.get(mockReq, mockRes);
 

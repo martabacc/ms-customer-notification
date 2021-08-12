@@ -5,7 +5,7 @@ const { toJSON } = require('./plugins');
 
 const notificationSchema = mongoose.Schema(
   {
-    notificationId: {
+    notification_id: {
       type: String,
       required: true,
       trim: true,
@@ -15,12 +15,12 @@ const notificationSchema = mongoose.Schema(
       required: true,
       trim: true,
     },
-    isDelivered: {
+    is_delivered: {
       type: Boolean,
       required: true,
       trim: true,
     },
-    customerRecipientID: {
+    customer_id: {
       type: String,
       required: true,
       trim: true,

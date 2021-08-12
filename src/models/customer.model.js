@@ -5,17 +5,17 @@ const { toJSON } = require('./plugins');
 
 const customerSchema = mongoose.Schema(
   {
-    customerId: {
+    customer_id: {
       type: String,
       required: true,
       trim: true,
     },
-    authenticationKey: {
+    authentication_key: {
       type: String,
       required: true,
       trim: true,
     },
-    subscriptionURL: {
+    subscription_url: {
       type: String,
       required: true,
       trim: true,

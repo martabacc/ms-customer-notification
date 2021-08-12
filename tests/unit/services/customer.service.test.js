@@ -13,7 +13,7 @@ jest.mock('uuid', () => ({
 }));
 
 describe('CustomerService', () => {
-  const customerId = 'syopi-123';
+  const customer_id = 'syopi-123';
 
   afterEach(() => {
     jest.resetAllMocks();
@@ -23,29 +23,29 @@ describe('CustomerService', () => {
     test('should call Comment.findOneAndUpdate with correct param', () => {
       const payload = {};
 
-      CustomerService.update(customerId, payload);
+      CustomerService.update(customer_id, payload);
 
-      expect(Customer.findOneAndUpdate).toHaveBeenCalledWith({ customerId }, payload);
+      expect(Customer.findOneAndUpdate).toHaveBeenCalledWith({ customer_id }, payload);
     });
   });
 
   describe('updateAuthKey', () => {
     test('should call Comment.findOneAndUpdate with correct param', () => {
       const payload = {
-        authenticationKey: '123',
+        authentication_key: '123',
       };
 
-      CustomerService.update(customerId, payload);
+      CustomerService.update(customer_id, payload);
 
-      expect(Customer.findOneAndUpdate).toHaveBeenCalledWith({ customerId }, payload);
+      expect(Customer.findOneAndUpdate).toHaveBeenCalledWith({ customer_id }, payload);
     });
   });
 
   describe('get', () => {
     test('should call Comment.findOne with correct param', () => {
-      CustomerService.get(customerId);
+      CustomerService.get(customer_id);
 
-      expect(Customer.findOne).toHaveBeenCalledWith({ customerId });
+      expect(Customer.findOne).toHaveBeenCalledWith({ customer_id });
     });
   });
 });

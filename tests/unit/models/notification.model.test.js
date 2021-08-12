@@ -6,10 +6,10 @@ describe('Notification model', () => {
     let newNotification;
     beforeEach(() => {
       newNotification = {
-        notificationId: faker.datatype.uuid(),
+        notification_id: faker.datatype.uuid(),
         payload: '{}',
-        isDelivered: true,
-        customerRecipientID: '123',
+        is_delivered: true,
+        customer_id: '123',
       };
     });
 
