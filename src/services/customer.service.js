@@ -11,5 +11,5 @@ const update = async (customerId, payload) => {
 };
 
 module.exports = {
-  update
+  update,
 };

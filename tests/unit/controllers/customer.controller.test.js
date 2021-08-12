@@ -1,0 +1,43 @@
+const customerService = require('../../../src/services/customer.service');
+const customerController = require('../../../src/controllers/customer.controller');
+
+jest.mock('../../../src/services/customer.service', () => ({
+  update: jest.fn(),
+}));
+
+describe('CustomerController', () => {
+  let mockReq;
+  let mockRes;
+  let mockSend;
+
+  beforeEach(() => {
+    mockSend = jest.fn();
+    mockReq = {
+      params: {
+        organizationName: 'xendit',
+      },
+    };
+    mockRes = {
+      status: () => ({ send: mockSend }),
+    };
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  afterAll(() => {
+    jest.resetAllMocks();
+  });
+
+  describe('patch', () => {
+    test('should call customerService.update with correct param', async () => {
+      mockReq.body = {};
+      mockReq.params = { customerId: '123' };
+
+      await customerController.patch(mockReq, mockRes);
+
+      expect(customerService.update).toHaveBeenCalledWith('123', {});
+    });
+  });
+});

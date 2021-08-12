@@ -1,0 +1,171 @@
+info:
+  description: 'Documentation for Technical Assesment Xendit'
+  version: '0.0.1'
+  title: 'ms-technical-assesment'
+  contact:
+    email: 'ronayumik@gmail.com'
+
+paths:
+  /orgs/{organizationName}/members:
+    get:
+      tags:
+        - "members"
+      summary: "get members from given orgs"
+      consumes:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "organizationName"
+          required: true
+          schema:
+            type: "string"
+            example: "xendit"
+      responses:
+        200:
+          description: "Successful"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Member"
+
+  /orgs/{organizationName}/comments:
+    post:
+      tags:
+        - "comments"
+      summary: "create comments"
+      consumes:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "organizationName"
+          required: true
+          schema:
+            type: "string"
+            example: "xendit"
+        - in: "body"
+          name: "Body"
+          required: true
+          schema:
+            $ref: "#/components/schemas/CreateCommentBody"
+      responses:
+        201:
+          description: "Successful"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Comment"
+    get:
+      tags:
+        - "comments"
+      summary: "get all comments from given organization name"
+      consumes:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "organizationName"
+          required: true
+          schema:
+            type: "string"
+            example: "xendit"
+      responses:
+        200:
+          description: "Successful"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/CreateCommentBody"
+    delete:
+      tags:
+        - "comments"
+      summary: "delete comments from given organization"
+      consumes:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "organizationName"
+          required: true
+          schema:
+            type: "string"
+            example: "xendit"
+      responses:
+        200:
+          description: "Successful"
+
+components:
+  schemas:
+    CreateCommentBody:
+      type: "object"
+      properties:
+        comment:
+          type: "string"
+      example:
+        comment: "Lorem ipsum"
+
+    Comment:
+      type: "object"
+      properties:
+        comment:
+          type: "string"
+        organizationName:
+          type: "string"
+      example:
+        comment: "Lorem ipsum dolor sit amet"
+        organizationName: "xendit"
+
+    Member:
+      type: "object"
+      properties:
+        login:
+          type: "string"
+        avatarUrl:
+          type: "string"
+        followers:
+          type: "number"
+        following:
+          type: "string"
+      example:
+        login: "mychaelgo"
+        avatarUrl: "https://avatars.githubusercontent.com/u/4651658?v=4"
+        followers: 76
+        following: 26
+
+    Error:
+      type: "object"
+      properties:
+        code:
+          type: number
+        message:
+          type: string
+
+  responses:
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 401
+            message: Please authenticate
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 403
+            message: Forbidden
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not found

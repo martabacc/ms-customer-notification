@@ -1,10 +1,8 @@
 const express = require('express');
-const commentController = require('../controllers/comment.controller');
+const customerController = require('../controllers/customer.controller');
 
 const router = express.Router();
 
-router.post('/:organizationName/comments', commentController.create);
-router.get('/:organizationName/comments', commentController.get);
-router.delete('/:organizationName/comments', commentController.softDelete);
+router.post('/:{customerId}', customerController.patch);
 
 module.exports = router;
