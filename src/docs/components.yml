@@ -1,171 +1,299 @@
 info:
   description: 'Documentation for Technical Assesment Xendit'
   version: '0.0.1'
-  title: 'ms-technical-assesment'
+  title: 'ms-customer-notification'
   contact:
     email: 'ronayumik@gmail.com'
 
 paths:
-  /orgs/{organizationName}/members:
-    get:
-      tags:
-        - "members"
-      summary: "get members from given orgs"
-      consumes:
-        - "application/json"
-      parameters:
-        - in: "path"
-          name: "organizationName"
-          required: true
-          schema:
-            type: "string"
-            example: "xendit"
-      responses:
-        200:
-          description: "Successful"
-          content:
-            application/json:
-              schema:
-                type: "array"
-                items:
-                  $ref: "#/components/schemas/Member"
-
-  /orgs/{organizationName}/comments:
+  /customer:
     post:
       tags:
-        - "comments"
-      summary: "create comments"
+        - "customer"
+      summary: "create customer"
       consumes:
         - "application/json"
       parameters:
-        - in: "path"
-          name: "organizationName"
-          required: true
-          schema:
-            type: "string"
-            example: "xendit"
         - in: "body"
           name: "Body"
           required: true
           schema:
-            $ref: "#/components/schemas/CreateCommentBody"
+            type: "object"
+            properties:
+              name:
+                type: "string"
+                example: "SWALAYAN MAJU BERSAMA"
+              callback_url:
+                type: "string"
+                example: "http://your.domain.com/callback-paths"
+              customer_id:
+                type: "string"
+                example: "MAJU_JAYA_CORP"
       responses:
-        201:
-          description: "Successful"
+        200:
+          description: "Success"
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Comment"
+                $ref: "#/components/schemas/Customer"
+
+  /customer/{customer_id}:
     get:
       tags:
-        - "comments"
-      summary: "get all comments from given organization name"
+        - "customer"
+      summary: "get customer detail"
       consumes:
         - "application/json"
       parameters:
         - in: "path"
-          name: "organizationName"
+          name: "customer_id"
           required: true
           schema:
             type: "string"
-            example: "xendit"
+            example: "MAJU_BERSAMA_CORP_JAYA"
       responses:
         200:
-          description: "Successful"
+          description: "Success"
           content:
             application/json:
               schema:
-                type: "array"
-                items:
-                  $ref: "#/components/schemas/CreateCommentBody"
-    delete:
+                $ref: "#/components/schemas/Customer"
+        404:
+          description: Customer Not found
+    patch:
       tags:
-        - "comments"
-      summary: "delete comments from given organization"
+        - "customer"
+      summary: "update customer attributes"
       consumes:
         - "application/json"
       parameters:
         - in: "path"
-          name: "organizationName"
+          name: "customer_id"
           required: true
           schema:
             type: "string"
-            example: "xendit"
+            example: "MAJU_BERSAMA_CORP_JAYA"
+        - in: "body"
+          name: "Body"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              callback_url:
+                type: "string"
+                example: "http://your.domain.com/callback-paths"
       responses:
         200:
-          description: "Successful"
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Customer"
+        404:
+          description: Customer Not found
+
+  /customer/key:
+    post:
+      tags:
+        - "customer"
+      summary: "generate new authentication key"
+      consumes:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "customer_id"
+          required: true
+          schema:
+            type: "string"
+            example: "MAJU_BERSAMA_CORP_JAYA"
+      responses:
+        200:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Customer"
+        404:
+          description: Customer Not found
+
+  /notification:
+    post:
+      tags:
+        - "notification"
+      summary: "send notification to customer"
+      consumes:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "Body"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              payment_id:
+                type: "string"
+                example: "123123123"
+              payment_code:
+                type: "string"
+                example: "XYZ123"
+              amount:
+                type: "string"
+                example: "50000"
+              paid_at:
+                type: "string"
+                example: "2020-10-17 07:41:33.866Z"
+              external_id:
+                type: "string"
+                example: "order-123"
+              customer_id:
+                type: "string"
+                example: "MAJU_JAYA_CORP"
+      responses:
+        200:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Notification"
+
+  /notification/{notification_id}:
+    patch:
+      tags:
+        - "notification"
+      summary: "update notification status"
+      consumes:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "Body"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              is_delivered:
+                type: "boolean"
+                example: true
+      responses:
+        200:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Notification"
+
+  /notification/retry:
+    post:
+      tags:
+        - "notification"
+      summary: "trigger retry delivery notification for specified customer"
+      consumes:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "Body"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              payment_id:
+                type: "string"
+                example: "123123123"
+              payment_code:
+                type: "string"
+                example: "XYZ123"
+              amount:
+                type: "string"
+                example: "50000"
+              paid_at:
+                type: "string"
+                example: "2020-10-17 07:41:33.866Z"
+              external_id:
+                type: "string"
+                example: "order-123"
+              customer_id:
+                type: "string"
+                example: "MAJU_JAYA_CORP"
+              callback_url:
+                type: "string"
+                example: "https://domain.com/callback"
+              authentication_key:
+                type: "string"
+                example: "vaksdfas-s939-skdkx9"
+      responses:
+        200:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Notification"
+
+  /notification/test:
+    post:
+      tags:
+        - "notification"
+      summary: "trigger retry delivery notification for specified customer"
+      consumes:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "customer_id"
+          required: true
+          schema:
+            type: "string"
+            example: "MAJU_BERSAMA_CORP_JAYA"
+      responses:
+        200:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  message:
+                    type: "string"
+                    example: "[OK] Found 3 undelivered notifications, sending..."
 
 components:
   schemas:
-    CreateCommentBody:
+    Customer:
       type: "object"
       properties:
-        comment:
+        name:
           type: "string"
-      example:
-        comment: "Lorem ipsum"
-
-    Comment:
+          example: "SWALAYAN MAJU BERSAMA"
+        callback_url:
+          type: "string"
+          example: "http://your.domain.com/callback-paths"
+        customer_id:
+          type: "string"
+          example: "MAJU_JAYA_CORP"
+        authentication_key:
+          type: "string"
+          example: "8063ae7d-aae1-4d12-baeb-042b5f13c3bx"
+    Notification:
       type: "object"
       properties:
-        comment:
+        payment_id:
           type: "string"
-        organizationName:
+          example: "123123123"
+        payment_code:
           type: "string"
-      example:
-        comment: "Lorem ipsum dolor sit amet"
-        organizationName: "xendit"
-
-    Member:
-      type: "object"
-      properties:
-        login:
+          example: "XYZ123"
+        amount:
           type: "string"
-        avatarUrl:
+          example: "50000"
+        paid_at:
           type: "string"
-        followers:
-          type: "number"
-        following:
+          example: "2020-10-17 07:41:33.866Z"
+        external_id:
           type: "string"
-      example:
-        login: "mychaelgo"
-        avatarUrl: "https://avatars.githubusercontent.com/u/4651658?v=4"
-        followers: 76
-        following: 26
-
-    Error:
-      type: "object"
-      properties:
-        code:
-          type: number
-        message:
-          type: string
-
-  responses:
-    Unauthorized:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 401
-            message: Please authenticate
-    Forbidden:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 403
-            message: Forbidden
-    NotFound:
-      description: Not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 404
-            message: Not found
+          example: "order-123"
+        notification_id:
+          type: "string"
+          example: "6115729f2ccb9372f84de97b"
+        customer_id:
+          type: "string"
+          example: "MAJU_JAYA_CORP"
+        is_delivered:
+          type: "boolean"
+          example: true
