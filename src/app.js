@@ -8,6 +8,7 @@ const httpStatus = require('http-status');
 const config = require('./config/config');
 const morgan = require('./config/morgan');
 const { maxRateInMinutes } = require('./middlewares/rateLimiter');
+const createProducer = require('./middlewares/producer');
 const routes = require('./routes');
 const { errorConverter, errorHandler } = require('./middlewares/error');
 const ApiError = require('./utils/ApiError');
@@ -38,6 +39,8 @@ app.use(compression());
 // enable cors
 app.use(cors());
 app.options('*', cors());
+
+app.use(createProducer);
 
 // limit repeated failed requests to endpoints
 if (config.env === 'production') {

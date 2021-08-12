@@ -13,6 +13,7 @@ const envVarsSchema = Joi.object()
     KAFKA_BROKER_LIST: Joi.string().required(),
     KAFKA_PROTOCOL_MECHANISM: Joi.string().required(),
     KAFKA_PROTOCOL: Joi.string().required(),
+    KAFKA_CLIENT_ID: Joi.string().required(),
     KAFKA_PRODUCER_USERNAME: Joi.string().required(),
     KAFKA_PRODUCER_PASSWORD: Joi.string().required(),
     KAFKA_NOTIFICATION_TOPIC_NAME: Joi.string().required(),
@@ -37,13 +38,14 @@ module.exports = {
       useUnifiedTopology: true,
     },
   },
-  kafkaConfluent: {
-    brokerList: envVars.KAFKA_BROKER_LIST,
-    mechanism: envVars.KAFKA_PROTOCOL_MECHANISM,
+  kafka: {
+    brokerList: envVars.KAFKA_BROKER_LIST.split(','),
     protocol: envVars.KAFKA_PROTOCOL,
-    credentials: {
-      producerUsername: envVars.KAFKA_PRODUCER_USERNAME,
-      producerPassword: envVars.KAFKA_PRODUCER_PASSWORD,
+    clientId: envVars.KAFKA_CLIENT_ID,
+    sasl: {
+      mechanism: envVars.KAFKA_PROTOCOL_MECHANISM,
+      username: envVars.KAFKA_PRODUCER_USERNAME,
+      password: envVars.KAFKA_PRODUCER_PASSWORD,
     },
     topics: {
       notification: envVars.KAFKA_NOTIFICATION_TOPIC_NAME,

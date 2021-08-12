@@ -3,11 +3,14 @@ const notificationService = require('../services/notification.service');
 
 const sendNotification = async (req, res) => {
   const payload = req.body;
+  const { producer } = res.locals;
 
   const notification = await notificationService.create({
     ...payload,
     is_delivered: false,
   });
+
+  await producer.send(JSON.stringify(notification));
 
   delete notification.id;
 
