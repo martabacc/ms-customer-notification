@@ -1,14 +1,13 @@
 const express = require('express');
-const commentRoute = require('./comment.route');
-const memberRoute = require('./member.route');
+const customerRoute = require('./customer.route');
 const docsRoute = require('./docs.route');
 
 const router = express.Router();
 
 const defaultRoutes = [
   {
-    path: '/orgs',
-    route: [commentRoute, memberRoute],
+    path: '/customer',
+    route: [customerRoute],
   },
   {
     path: '/docs',
