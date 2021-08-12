@@ -46,6 +46,14 @@ const notificationSchema = mongoose.Schema(
   }
 );
 
+notificationSchema.virtual('notification_id').get(function () {
+  return this._id;
+});
+
+// tell Mongoose to retreive the virtual fields
+notificationSchema.set('toObject', { virtuals: true });
+notificationSchema.set('toJSON', { virtuals: true });
+
 // add plugin that converts mongoose to json
 notificationSchema.plugin(toJSON);
 notificationSchema.plugin(softDelete);

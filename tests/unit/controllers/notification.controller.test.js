@@ -2,9 +2,9 @@ const notificationService = require('../../../src/services/notification.service'
 const notificationController = require('../../../src/controllers/notification.controller');
 
 jest.mock('../../../src/services/notification.service', () => ({
-  create: jest.fn(),
+  create: jest.fn().mockReturnValue({}),
   update: jest.fn(),
-  findUndelivered: jest.fn(),
+  findUndelivered: jest.fn().mockReturnValue({}),
 }));
 
 describe('NotificationController', () => {

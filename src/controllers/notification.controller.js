@@ -9,6 +9,8 @@ const sendNotification = async (req, res) => {
     is_delivered: false,
   });
 
+  delete notification.id;
+
   res.status(httpStatus.OK).send(notification);
 };
 
@@ -19,6 +21,8 @@ const sendDummyNotification = async (req, res) => {
     ...payload,
     is_testing: true,
   });
+
+  delete notification.id;
 
   res.status(httpStatus.OK).send(notification);
 };
