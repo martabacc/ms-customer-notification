@@ -4,7 +4,7 @@ const NotificationService = require('../../../src/services/notification.service'
 jest.mock('../../../src/models', () => ({
   Notification: {
     find: jest.fn(),
-    findOneAndUpdate: jest.fn(),
+    findByIdAndUpdate: jest.fn(),
     update: jest.fn(),
     create: jest.fn(),
   },
@@ -18,12 +18,12 @@ describe('NotificationService', () => {
   });
 
   describe('update', () => {
-    test('should call Notification.findOneAndUpdate with correct param', () => {
+    test('should call Notification.findByIdAndUpdate with correct param', () => {
       const payload = {};
 
-      NotificationService.update(notification_id, payload);
+      NotificationService.update({ notification_id }, payload);
 
-      expect(Notification.findOneAndUpdate).toHaveBeenCalledWith({ _id: notification_id }, payload);
+      expect(Notification.findByIdAndUpdate).toHaveBeenCalledWith(notification_id, payload, { new: true });
     });
   });
 
@@ -44,7 +44,6 @@ describe('NotificationService', () => {
       expect(Notification.find).toHaveBeenCalledWith({
         customer_id,
         is_delivered: false,
-        is_testing: false,
       });
     });
   });

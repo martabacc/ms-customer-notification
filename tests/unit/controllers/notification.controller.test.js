@@ -63,11 +63,12 @@ describe('NotificationController', () => {
     });
   });
 
-  describe('triggerRetryDelivery', () => {
+  describe('retryDelivery', () => {
     test('should call notificationService.findUndelivered with correct param', async () => {
       mockReq.body = {
         customer_id: 'abc',
       };
+      notificationService.findUndelivered.mockResolvedValueOnce([{ customer_id: '123' }]);
 
       await notificationController.retryDelivery(mockReq, mockRes);
 

@@ -1,5 +1,5 @@
-const { Customer } = require('../../../src/models');
 const uuid = require('uuid');
+const { Customer } = require('../../../src/models');
 const CustomerService = require('../../../src/services/customer.service');
 
 jest.mock('../../../src/models', () => ({
@@ -26,7 +26,7 @@ describe('CustomerService', () => {
 
       CustomerService.update(customer_id, payload);
 
-      expect(Customer.findOneAndUpdate).toHaveBeenCalledWith({ customer_id }, payload);
+      expect(Customer.findOneAndUpdate).toHaveBeenCalledWith({ customer_id }, payload, { new: true });
     });
   });
 
@@ -39,7 +39,7 @@ describe('CustomerService', () => {
 
       CustomerService.updateAuthKey(customer_id);
 
-      expect(Customer.findOneAndUpdate).toHaveBeenCalledWith({ customer_id }, expectedPayload);
+      expect(Customer.findOneAndUpdate).toHaveBeenCalledWith({ customer_id }, expectedPayload, { new: true });
     });
   });
 

@@ -12,8 +12,7 @@ const customerSchema = mongoose.Schema(
     },
     name: {
       type: String,
-      required: true,
-      trim: true,
+      required: false,
     },
     authentication_key: {
       type: String,
