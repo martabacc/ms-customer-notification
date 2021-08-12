@@ -23,10 +23,10 @@ const sendDummyNotification = async (req, res) => {
   res.status(httpStatus.OK).send(notification);
 };
 
-const triggerRetryDeliveries = async (req, res) => {
-  const { notification_id } = req.params;
+const retryDelivery = async (req, res) => {
+  const { customer_id } = req.body;
 
-  const notification = await notificationService.updateAuthKey(notification_id);
+  const notification = await notificationService.findUndelivered(customer_id);
 
   res.status(httpStatus.OK).send(notification);
 };
@@ -35,14 +35,14 @@ const update = async (req, res) => {
   const { notification_id } = req.params;
   const payload = req.body;
 
-  const notification = await notificationService.findOneAndUpdate({notification_id}, payload);
+  const notification = await notificationService.update({ notification_id }, payload);
 
   res.status(httpStatus.OK).send(notification);
 };
 
 module.exports = {
   update,
-  triggerRetryDeliveries,
+  retryDelivery,
   sendNotification,
   sendDummyNotification,
 };

@@ -4,6 +4,7 @@ const notificationController = require('../../../src/controllers/notification.co
 jest.mock('../../../src/services/notification.service', () => ({
   create: jest.fn(),
   update: jest.fn(),
+  findUndelivered: jest.fn(),
 }));
 
 describe('NotificationController', () => {
@@ -53,6 +54,29 @@ describe('NotificationController', () => {
         randomAttributes: 'abc',
         is_testing: true,
       });
+    });
+  });
+
+  describe('triggerRetryDelivery', () => {
+    test('should call notificationService.findUndelivered with correct param', async () => {
+      mockReq.body = {
+        customer_id: 'abc',
+      };
+
+      await notificationController.retryDelivery(mockReq, mockRes);
+
+      expect(notificationService.findUndelivered).toHaveBeenCalledWith('abc');
+    });
+  });
+
+  describe('update', () => {
+    test('should call notificationService.findUndelivered with correct param', async () => {
+      mockReq.body = { is_delivered: true };
+      mockReq.params = { notification_id: 123 };
+
+      await notificationController.update(mockReq, mockRes);
+
+      expect(notificationService.update).toHaveBeenCalledWith({ notification_id: 123 }, { is_delivered: true });
     });
   });
 });

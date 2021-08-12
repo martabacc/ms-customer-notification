@@ -19,7 +19,21 @@ const create = async (notification_id) => {
   return Notification.findOne({ notification_id });
 };
 
+/**
+ * getting record of notification in database
+ * @param {string} notification_id
+ * @returns {Promise<Notification>}
+ */
+const findUndelivered = async (customer_id) => {
+  return Notification.find({
+    customer_id,
+    is_delivered: false,
+    is_testing: false,
+  });
+};
+
 module.exports = {
   update,
   create,
+  findUndelivered,
 };
