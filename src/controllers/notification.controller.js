@@ -3,14 +3,14 @@ const notificationService = require('../services/notification.service');
 
 const sendNotification = async (req, res) => {
   const payload = req.body;
-  const { producer } = res.locals;
+  const { notificationProducer } = res.locals;
 
   const notification = await notificationService.create({
     ...payload,
     is_delivered: false,
   });
 
-  await producer.send(JSON.stringify(notification));
+  await notificationProducer.send(JSON.stringify(notification));
 
   delete notification.id;
 
@@ -19,11 +19,15 @@ const sendNotification = async (req, res) => {
 
 const sendDummyNotification = async (req, res) => {
   const payload = req.body;
+  const { notificationProducer } = res.locals;
 
   const notification = await notificationService.create({
     ...payload,
     is_testing: true,
+    is_delivered: false,
   });
+
+  await notificationProducer.send(JSON.stringify(notification));
 
   delete notification.id;
 

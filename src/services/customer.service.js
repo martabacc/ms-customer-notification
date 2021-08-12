@@ -1,4 +1,4 @@
-const { v4: uuidv4 } = require('uuid');
+const uuid = require('uuid');
 const { Customer } = require('../models');
 
 /**
@@ -17,7 +17,7 @@ const update = async (customer_id, payload) => {
  * @returns {Promise<Customer>}
  */
 const updateAuthKey = async (customer_id) => {
-  const newKey = uuidv4();
+  const newKey = uuid.v4();
   const payload = { authentication_key: newKey };
 
   return Customer.findOneAndUpdate({ customer_id }, payload);

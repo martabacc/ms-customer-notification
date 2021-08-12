@@ -16,6 +16,11 @@ describe('NotificationController', () => {
     mockSend = jest.fn();
     mockRes = {
       status: () => ({ send: mockSend }),
+      locals: {
+        notificationProducer: {
+          send: jest.fn().mockReturnValue({}),
+        },
+      },
     };
   });
 
@@ -53,6 +58,7 @@ describe('NotificationController', () => {
       expect(notificationService.create).toHaveBeenCalledWith({
         randomAttributes: 'abc',
         is_testing: true,
+        is_delivered: false,
       });
     });
   });

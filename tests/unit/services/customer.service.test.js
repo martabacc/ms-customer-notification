@@ -1,4 +1,5 @@
 const { Customer } = require('../../../src/models');
+const uuid = require('uuid');
 const CustomerService = require('../../../src/services/customer.service');
 
 jest.mock('../../../src/models', () => ({
@@ -9,7 +10,7 @@ jest.mock('../../../src/models', () => ({
 }));
 
 jest.mock('uuid', () => ({
-  v4: jest.fn().mockResolvedValue('123'),
+  v4: jest.fn().mockReturnValue('123'),
 }));
 
 describe('CustomerService', () => {
@@ -31,13 +32,14 @@ describe('CustomerService', () => {
 
   describe('updateAuthKey', () => {
     test('should call Comment.findOneAndUpdate with correct param', () => {
-      const payload = {
+      uuid.v4.mockReturnValue('123');
+      const expectedPayload = {
         authentication_key: '123',
       };
 
-      CustomerService.update(customer_id, payload);
+      CustomerService.updateAuthKey(customer_id);
 
-      expect(Customer.findOneAndUpdate).toHaveBeenCalledWith({ customer_id }, payload);
+      expect(Customer.findOneAndUpdate).toHaveBeenCalledWith({ customer_id }, expectedPayload);
     });
   });
 
