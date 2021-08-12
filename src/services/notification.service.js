@@ -11,17 +11,17 @@ const update = async (notification_id, payload) => {
 };
 
 /**
- * getting record of notification in database
- * @param {string} notification_id
+ * create notification record in database
+ * @param {Object} payload
  * @returns {Promise<Notification>}
  */
-const create = async (notification_id) => {
-  return Notification.findOne({ notification_id });
+const create = async (payload) => {
+  return Notification.create(payload);
 };
 
 /**
  * getting record of notification in database
- * @param {string} notification_id
+ * @param {string} customer_id
  * @returns {Promise<Notification>}
  */
 const findUndelivered = async (customer_id) => {
