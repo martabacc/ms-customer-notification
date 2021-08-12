@@ -5,10 +5,10 @@ const createProducer = async (req, res, next) => {
   const producer = await createKafkaInstance();
 
   const notificationProducer = {
-    send: (payload) =>
+    send: (notifications) =>
       producer.send({
         topic: config.kafka.topics.notification,
-        messages: [{ value: payload }],
+        messages: notifications.map((payload) => ({ value: payload })), // note that messages receives array!
       }),
   };
 

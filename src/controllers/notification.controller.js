@@ -10,7 +10,8 @@ const sendNotification = async (req, res) => {
     is_delivered: false,
   });
 
-  await notificationProducer.send(JSON.stringify(notification));
+  const notificationPayload = [JSON.stringify(notification)];
+  await notificationProducer.send(notificationPayload);
 
   delete notification.id;
 
@@ -27,7 +28,8 @@ const sendDummyNotification = async (req, res) => {
     is_delivered: false,
   });
 
-  await notificationProducer.send(JSON.stringify(notification));
+  const notificationPayload = [JSON.stringify(notification)];
+  await notificationProducer.send(notificationPayload);
 
   delete notification.id;
 
@@ -36,10 +38,15 @@ const sendDummyNotification = async (req, res) => {
 
 const retryDelivery = async (req, res) => {
   const { customer_id } = req.body;
+  const { notificationProducer } = res.locals;
 
-  const notification = await notificationService.findUndelivered(customer_id);
+  const notifications = await notificationService.findUndelivered(customer_id);
 
-  res.status(httpStatus.OK).send(notification);
+  const notificationPayload = notifications.map((notification) => JSON.stringify(notification));
+  await notificationProducer.send(notificationPayload);
+
+  const message = `[OK] Found ${notifications.length} undelivered notifications, sending...`;
+  res.status(httpStatus.OK).send({ message });
 };
 
 const update = async (req, res) => {

@@ -28,7 +28,6 @@ const findUndelivered = (customer_id) => {
   return Notification.find({
     customer_id,
     is_delivered: false,
-    is_testing: false,
   });
 };
 
