@@ -20,7 +20,7 @@ describe('CustomerService', () => {
 
       CustomerService.update(customerId, payload);
 
-      expect(Customer.findOneAndUpdate).toHaveBeenCalledWith({customerId}, payload);
+      expect(Customer.findOneAndUpdate).toHaveBeenCalledWith({ customerId }, payload);
     });
   });
 });

@@ -1,18 +1,19 @@
 const faker = require('faker');
-const { Comment } = require('../../../src/models');
+const { Customer } = require('../../../src/models');
 
-describe('Comment model', () => {
-  describe('Comment validation', () => {
-    let newComment;
+describe('Customer model', () => {
+  describe('Customer validation', () => {
+    let newCustomer;
     beforeEach(() => {
-      newComment = {
-        comment: faker.lorem.text(),
-        organizationName: faker.internet.userName(),
+      newCustomer = {
+        customerId: faker.datatype.uuid(),
+        authenticationKey: 'abc',
+        subscriptionURL: 'http://abc',
       };
     });
 
     test('should correctly validate a valid user', async () => {
-      await expect(new Comment(newComment).validate()).resolves.toBeUndefined();
+      await expect(new Customer(newCustomer).validate()).resolves.toBeUndefined();
     });
   });
 });
