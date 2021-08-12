@@ -4,6 +4,7 @@ const CustomerService = require('../../../src/services/customer.service');
 jest.mock('../../../src/models', () => ({
   Customer: {
     findOneAndUpdate: jest.fn(),
+    findOne: jest.fn(),
   },
 }));
 
@@ -37,6 +38,14 @@ describe('CustomerService', () => {
       CustomerService.update(customerId, payload);
 
       expect(Customer.findOneAndUpdate).toHaveBeenCalledWith({ customerId }, payload);
+    });
+  });
+
+  describe('get', () => {
+    test('should call Comment.findOne with correct param', () => {
+      CustomerService.get(customerId);
+
+      expect(Customer.findOne).toHaveBeenCalledWith({ customerId });
     });
   });
 });

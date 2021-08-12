@@ -10,8 +10,9 @@ const { Customer } = require('../models');
 const update = async (customerId, payload) => {
   return Customer.findOneAndUpdate({ customerId }, payload);
 };
+
 /**
- * create comment to model
+ * update authentication key
  * @param {string} customerId
  * @returns {Promise<Customer>}
  */
@@ -22,7 +23,17 @@ const updateAuthKey = async (customerId) => {
   return Customer.findOneAndUpdate({ customerId }, payload);
 };
 
+/**
+ * getting record of customer in database
+ * @param {string} customerId
+ * @returns {Promise<Customer>}
+ */
+const get = async (customerId) => {
+  return Customer.findOne({ customerId });
+};
+
 module.exports = {
   update,
+  get,
   updateAuthKey,
 };
