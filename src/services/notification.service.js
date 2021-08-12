@@ -7,7 +7,7 @@ const { Notification } = require('../models');
  * @returns {Promise<Notification>}
  */
 const update = async (notification_id, payload) => {
-  return Notification.findOneAndUpdate({ notification_id }, payload);
+  return Notification.findOneAndUpdate({ _id: notification_id }, payload);
 };
 
 /**

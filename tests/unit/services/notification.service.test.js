@@ -23,7 +23,7 @@ describe('NotificationService', () => {
 
       NotificationService.update(notification_id, payload);
 
-      expect(Notification.findOneAndUpdate).toHaveBeenCalledWith({ notification_id }, payload);
+      expect(Notification.findOneAndUpdate).toHaveBeenCalledWith({ _id: notification_id }, payload);
     });
   });
 
