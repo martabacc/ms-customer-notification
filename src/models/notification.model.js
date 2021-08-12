@@ -40,6 +40,9 @@ const notificationSchema = mongoose.Schema(
       required: true,
       trim: true,
     },
+    is_testing: {
+      type: Boolean,
+    },
   },
   {
     timestamps: true,
