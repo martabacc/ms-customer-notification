@@ -10,7 +10,6 @@ const envVarsSchema = Joi.object()
     HOST_PATH: Joi.string().required(),
     PORT: Joi.number().default(3000),
     MONGODB_URL: Joi.string().required().description('Mongo DB url'),
-    GITHUB_API_KEY: Joi.string().required().description('Github api key'),
   })
   .unknown();
 
@@ -31,8 +30,5 @@ module.exports = {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     },
-  },
-  github: {
-    apiKey: envVars.GITHUB_API_KEY,
-  },
+  }
 };
