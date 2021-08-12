@@ -3,6 +3,7 @@ const customerController = require('../controllers/customer.controller');
 
 const router = express.Router();
 
-router.post('/:{customerId}', customerController.patch);
+router.patch('/:{customerId}', customerController.patch);
+router.post('/:{customerId}/key', customerController.updateAuthKey);
 
 module.exports = router;

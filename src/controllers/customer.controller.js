@@ -10,6 +10,15 @@ const patch = async (req, res) => {
   res.status(httpStatus.OK).send(customer);
 };
 
+const updateAuthKey = async (req, res) => {
+  const { customerId } = req.params;
+
+  const customer = await customerService.updateAuthKey(customerId);
+
+  res.status(httpStatus.OK).send(customer);
+};
+
 module.exports = {
   patch,
+  updateAuthKey,
 };
