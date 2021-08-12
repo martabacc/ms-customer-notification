@@ -43,6 +43,12 @@ const notificationSchema = mongoose.Schema(
     is_testing: {
       type: Boolean,
     },
+    callback_url: {
+      type: String,
+    },
+    authentication_key: {
+      type: String,
+    },
   },
   {
     timestamps: true,
