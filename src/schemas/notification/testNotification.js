@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const test = {
+const testNotification = {
   body: Joi.object().keys({
     payment_id: Joi.string().trim().required(),
     payment_code: Joi.string().trim().required(),
@@ -13,4 +13,4 @@ const test = {
   }),
 };
 
-module.exports = test;
+module.exports = testNotification;

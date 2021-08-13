@@ -1,7 +1,7 @@
 .PHONY: all
-all: test
+all: testNotification
 
-.PHONY: test
-test:
-	yarn test
+.PHONY: testNotification
+testNotification:
+	yarn testNotification
 	yarn lint

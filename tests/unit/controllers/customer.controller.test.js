@@ -94,7 +94,7 @@ describe('CustomerController', () => {
 
   describe('create', () => {
     test('should return conflict status when customer with same id exist', async () => {
-      mockReq.params = { customer_id: '123' };
+      mockReq.body = { customer_id: '123' };
       customerService.get.mockReturnValueOnce({});
 
       await customerController.create(mockReq, mockRes);
@@ -103,11 +103,13 @@ describe('CustomerController', () => {
     });
 
     test('should call customerService.create with correct param', async () => {
-      mockReq.body = { sample: '123' };
+      mockReq.body = { customer_id: '123' };
+      customerService.get.mockResolvedValueOnce(null);
+      customerService.create.mockResolvedValueOnce(null);
 
       await customerController.create(mockReq, mockRes);
 
-      expect(customerService.create).toHaveBeenCalledWith({ sample: '123' });
+      expect(customerService.create).toHaveBeenCalledWith({ customer_id: '123' });
     });
   });
 });

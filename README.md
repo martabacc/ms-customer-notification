@@ -49,12 +49,12 @@ Testing:
 
 ```bash
 # run all tests
-npm run test
+npm run testNotification
 
 # run all tests in watch mode
-npm run test:watch
+npm run testNotification:watch
 
-# run test coverage
+# run testNotification coverage
 npm run coverage
 ```
 
@@ -68,7 +68,7 @@ npm run docker:dev
 npm run docker:prod
 
 # run all tests in a docker container
-npm run docker:test
+npm run docker:testNotification
 ```
 
 Linting:
@@ -105,7 +105,7 @@ KAFKA_BROKER_LIST=abc:9093,abc:9094,abc:9095
 KAFKA_PRODUCER_USERNAME=username
 KAFKA_PRODUCER_PASSWORD=password
 KAFKA_NOTIFICATION_TOPIC_NAME=notification
-KAFKA_CLIENT_ID=ms-customer-notification-test
+KAFKA_CLIENT_ID=ms-customer-notification-testNotification
 KAFKA_PROTOCOL=SASL_SSL
 KAFKA_PROTOCOL_MECHANISM=SCRAM-SHA-256
 ```
@@ -143,7 +143,7 @@ POST /customer, to create customer, testing purpose only
 
 POST /notification to post notifications
 PATCH /notification/{notification_id} to update particular notification
-POST /notification/{customer_id}/test to post dummy notif to particular customer
+POST /notification/{customer_id}/testNotification to post dummy notif to particular customer
 POST /notification/{customer_id}/retry to retry failed notifications
 
 ```
