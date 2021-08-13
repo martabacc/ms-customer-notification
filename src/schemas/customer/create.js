@@ -5,7 +5,6 @@ const createSchema = {
     name: Joi.string().trim().required(),
     callback_url: Joi.string().trim().required(),
     customer_id: Joi.string().trim().required(),
-    authentication_key: Joi.string().trim().required(),
   }),
 };
 

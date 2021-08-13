@@ -1,3 +1,4 @@
+const httpStatus = require('http-status');
 const customerService = require('../../../src/services/customer.service');
 const customerController = require('../../../src/controllers/customer.controller');
 
@@ -17,7 +18,7 @@ describe('CustomerController', () => {
     mockSend = jest.fn();
     mockReq = {};
     mockRes = {
-      status: () => ({ send: mockSend }),
+      status: jest.fn().mockReturnValue({ send: mockSend }),
     };
   });
 
@@ -30,6 +31,16 @@ describe('CustomerController', () => {
   });
 
   describe('patch', () => {
+    test('should return not found status when customer not exist', async () => {
+      mockReq.body = {};
+      mockReq.params = { customer_id: '123' };
+      customerService.get.mockReturnValueOnce(null);
+
+      await customerController.patch(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(httpStatus.NOT_FOUND);
+    });
+
     test('should call customerService.update with correct param', async () => {
       mockReq.body = {};
       mockReq.params = { customer_id: '123' };
@@ -42,6 +53,15 @@ describe('CustomerController', () => {
   });
 
   describe('updateAuthKey', () => {
+    test('should return not found status when customer not exist', async () => {
+      mockReq.params = { customer_id: '123' };
+      customerService.get.mockReturnValueOnce(null);
+
+      await customerController.updateAuthKey(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(httpStatus.NOT_FOUND);
+    });
+
     test('should call customerService.update with correct param', async () => {
       mockReq.params = { customer_id: '123' };
       customerService.get.mockReturnValueOnce({});
@@ -53,6 +73,15 @@ describe('CustomerController', () => {
   });
 
   describe('get', () => {
+    test('should return not found status when customer not exist', async () => {
+      mockReq.params = { customer_id: '123' };
+      customerService.get.mockReturnValueOnce(null);
+
+      await customerController.get(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(httpStatus.NOT_FOUND);
+    });
+
     test('should call customerService.get with correct param', async () => {
       mockReq.params = { customer_id: '123' };
       customerService.get.mockReturnValueOnce({});
@@ -64,6 +93,15 @@ describe('CustomerController', () => {
   });
 
   describe('create', () => {
+    test('should return conflict status when customer with same id exist', async () => {
+      mockReq.params = { customer_id: '123' };
+      customerService.get.mockReturnValueOnce({});
+
+      await customerController.create(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(httpStatus.CONFLICT);
+    });
+
     test('should call customerService.create with correct param', async () => {
       mockReq.body = { sample: '123' };
 

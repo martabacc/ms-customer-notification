@@ -45,6 +45,12 @@ const get = async (req, res) => {
 const create = async (req, res) => {
   const payload = req.body;
 
+  const customerExist = await customerService.get(payload.customer_id);
+
+  if (customerExist) {
+    return res.status(httpStatus.CONFLICT).send();
+  }
+
   const customer = await customerService.create(payload);
 
   res.status(httpStatus.CREATED).send(customer);
