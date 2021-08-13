@@ -12,7 +12,7 @@ git clone git@github.com:martabacc/ms-customer-notification.git
 
 cd ms-customer-notification
 
-yarn install
+npm run install
 ```
 
 ## Table of Contents
@@ -27,7 +27,7 @@ yarn install
 - **Testing**: unit and integration tests using [Jest](https://jestjs.io)
 - **API documentation**: with [swagger-jsdoc](https://github.com/Surnet/swagger-jsdoc) and [swagger-ui-express](https://github.com/scottie1984/swagger-ui-express)
 - **Process management**: advanced production process management using [PM2](https://pm2.keymetrics.io)
-- **Dependency management**: with [Yarn](https://yarnpkg.com)
+- **Dependency management**: with npm
 - **Environment variables**: using [dotenv](https://github.com/motdotla/dotenv) and [cross-env](https://github.com/kentcdodds/cross-env#readme)
 - **Santizing**: sanitize request data against xss and query injection
 
@@ -36,55 +36,55 @@ yarn install
 Running locally:
 
 ```bash
-yarn dev
+npm run dev
 ```
 
 Running in production:
 
 ```bash
-yarn start
+npm run start
 ```
 
 Testing:
 
 ```bash
 # run all tests
-yarn test
+npm run test
 
 # run all tests in watch mode
-yarn test:watch
+npm run test:watch
 
 # run test coverage
-yarn coverage
+npm run coverage
 ```
 
 Docker:
 
 ```bash
 # run docker container in development mode
-yarn docker:dev
+npm run docker:dev
 
 # run docker container in production mode
-yarn docker:prod
+npm run docker:prod
 
 # run all tests in a docker container
-yarn docker:test
+npm run docker:test
 ```
 
 Linting:
 
 ```bash
 # run ESLint
-yarn lint
+npm run lint
 
 # fix ESLint errors
-yarn lint:fix
+npm run lint:fix
 
 # run prettier
-yarn prettier
+npm run prettier
 
 # fix prettier errors
-yarn prettier:fix
+npm run prettier:fix
 ```
 
 ## Environment Variables
@@ -93,14 +93,21 @@ The environment variables can be found and modified in the `.env` file. They com
 
 ```bash
 # Port number
+HOST_PATH=0.0.0.0
 PORT=3000
+NODE_ENV=development
 
 # URL of the Mongo DB
-MONGODB_URL=mongodb://127.0.0.1:27017/node-boilerplate
+MONGODB_URL=mongodb://host:port/db_name
 
-# GITHUB_API_KEY
-GITHUB_API_KEY=thisisasamplesecret
-
+# KAFKA DETAILS
+KAFKA_BROKER_LIST=abc:9093,abc:9094,abc:9095
+KAFKA_PRODUCER_USERNAME=username
+KAFKA_PRODUCER_PASSWORD=password
+KAFKA_NOTIFICATION_TOPIC_NAME=notification
+KAFKA_CLIENT_ID=ms-customer-notification-test
+KAFKA_PROTOCOL=SASL_SSL
+KAFKA_PROTOCOL_MECHANISM=SCRAM-SHA-256
 ```
 
 ## Project Structure
@@ -131,9 +138,11 @@ List of available routes:
 ```
 PATCH /customer/{customer_id} to update detail of the customer (except keys)
 POST /customer/{customer_id}/key to renew key for particular merchant
-GET /customer/{customer_id}, getting details of a customer (callback url, keys)
+GET /customer/{customer_id}, getting customer data (use by internal call/worker)
+POST /customer, to create customer, testing purpose only
 
 POST /notification to post notifications
+PATCH /notification/{notification_id} to update particular notification
 POST /notification/{customer_id}/test to post dummy notif to particular customer
 POST /notification/{customer_id}/retry to retry failed notifications
 
